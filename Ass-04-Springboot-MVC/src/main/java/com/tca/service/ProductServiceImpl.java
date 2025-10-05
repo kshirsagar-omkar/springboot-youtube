@@ -5,17 +5,26 @@ import com.tca.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class ProductService {
+public class ProductServiceImpl implements ProductService{
 
 
     @Autowired
     private ProductDao productDao;
 
-    public List<Product> getAllProduct(){
-        return productDao.getAllProduct();
+    public List<Product> findAll(){
+        return productDao.findAll();
+    }
+
+    @Override
+    public Product save(Product product) {
+        return productDao.save(product);
+    }
+
+    @Override
+    public List<Product> findExpensiveProduct(Double price){
+        return productDao.findExpensiveProduct(price);
     }
 }
