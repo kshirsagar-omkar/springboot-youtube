@@ -2,6 +2,7 @@ package com.tca.controller;
 
 
 import com.tca.entities.Employee;
+import com.tca.response.EmployeeResponse;
 import com.tca.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/api/employee")
-    public Employee save(@RequestBody Employee employee){
+    public EmployeeResponse save(@RequestBody Employee employee){
         return employeeService.save(employee);
     }
 

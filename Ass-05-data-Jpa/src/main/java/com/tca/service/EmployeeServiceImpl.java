@@ -3,6 +3,7 @@ package com.tca.service;
 import com.tca.entities.Employee;
 import com.tca.exception.SalaryLessException;
 import com.tca.repository.EmployeeRepository;
+import com.tca.response.EmployeeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +18,14 @@ public class EmployeeServiceImpl implements EmployeeService{
     private EmployeeRepository employeeRepository;
 
     @Override
-    public Employee save(Employee employee) {
-        if (employee != null && employee.getSalary() > 50000)
-            return employeeRepository.save(employee);
+    public EmployeeResponse save(Employee employee) {
+        if (employee != null && employee.getSalary() > 50000) {
+            employeeRepository.save(employee);
+            return new EmployeeResponse(employee, "Employee Saved Successfully!!");
+        }
         else {
-            throw new SalaryLessException("Salary can't be less than 50000");
+            return new EmployeeResponse(null, "Salary can't be less than 50000");
+//            throw new SalaryLessException("Salary can't be less than 50000");
         }
     }
 
