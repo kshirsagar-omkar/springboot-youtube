@@ -9,5 +9,6 @@ public interface EmployeeService {
 
     public abstract EmployeeResponse save(Employee employee);
     public abstract List<Employee> findAll();
+    public abstract EmployeeResponse findById(Integer id);
 
 }

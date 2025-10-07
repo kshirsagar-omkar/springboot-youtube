@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -28,6 +29,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 //            throw new SalaryLessException("Salary can't be less than 50000");
         }
     }
+
+
+    @Override
+    public EmployeeResponse findById(Integer id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if( employee.isPresent() ){
+            return new EmployeeResponse(employee.get(),"Employee found!" );
+        }
+        return new EmployeeResponse(null,"Employee NOT found!" );
+    }
+
 
     @Override
     public List<Employee> findAll() {
