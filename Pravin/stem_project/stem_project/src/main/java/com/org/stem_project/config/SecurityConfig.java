@@ -1,0 +1,46 @@
+package com.org.stem_project.config;
+
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+@Slf4j
+public class SecurityConfig {
+
+    @Autowired
+    private FirebaseTokenFilter firebaseTokenFilter;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable()) // Keep disabled for REST APIs/testing
+                // NOTE: In production with cookies, enable CSRF protection
+                // Cookie-based auth requires CSRF tokens to prevent cross-site attacks
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/register","/","/index.html",
+                               "/api/auth/**").permitAll() // Allow auth endpoints including set-token and logout
+
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
+              http.addFilterBefore(firebaseTokenFilter,UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
+
+}
+
+
+

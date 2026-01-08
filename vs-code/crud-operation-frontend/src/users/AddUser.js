@@ -20,10 +20,10 @@ export default function AddUser() {
     }
 
 
+    const API_URL = process.env.REACT_APP_API_URL;
     const onSubmit=async(e)=>{
         e.preventDefault();
-
-        await axios.post("http://localhost:8080/user", user);
+        await axios.post(`${API_URL}/user`, user);
         navigate("/");
     }
 

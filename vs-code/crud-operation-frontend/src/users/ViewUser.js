@@ -17,9 +17,10 @@ export default function ViewUser() {
     }, []);
 
 
+    const API_URL = process.env.REACT_APP_API_URL;
     const loadUser = async () => {
-        const result = await axios.get(`http://localhost:8080/user/${id}`);
-        setUser(result.data)
+        const result = await axios.get(`${API_URL}/user/${id}`);
+        setUser(result.data);
     }
 
 

@@ -16,16 +16,16 @@ export default function Home() {
     }, []);
 
 
+    const API_URL = process.env.REACT_APP_API_URL;
     const loadUsers=async()=>{
-        const result=await axios.get("http://localhost:8080/users")
-        // console.log(result.data);
-        setUsers (result.data);
+        const result=await axios.get(`${API_URL}/users`);
+        setUsers(result.data);
     }
 
 
     const deleteUser=async(id)=>{
-        await axios.delete(`http://localhost:8080/user/${id}`)
-        loadUsers()
+        await axios.delete(`${API_URL}/user/${id}`);
+        loadUsers();
     }
 
 

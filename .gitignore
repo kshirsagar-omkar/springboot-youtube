@@ -1,0 +1,6 @@
+.env
+*.env
+serviceAccountKey.json
+.idea/
+.vscode/
+.DS_Store
